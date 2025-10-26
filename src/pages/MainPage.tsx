@@ -1,6 +1,6 @@
 import React from 'react';
-import {Offer} from "../mocks/offers.ts";
-import {OffersList} from "../components/OffersList.tsx";
+import {Offer} from '../mocks/offers.ts';
+import {OffersList} from '../components/OffersList.tsx';
 
 type MainPageProps = {
   offers: Offer[];

@@ -8,7 +8,7 @@ export const PropertyPage: React.FC = () => {
   const offer = offers.find((o) => o.id === id);
 
   if (!offer) {
-    return <div>Offer not found</div>
+    return <div>Offer not found</div>;
   }
 
   return (
@@ -17,7 +17,7 @@ export const PropertyPage: React.FC = () => {
         <svg xmlns="http://www.w3.org/2000/svg">
           <symbol id="icon-arrow-select" viewBox="0 0 7 4">
             <path fillRule="evenodd" clipRule="evenodd"
-                  d="M0 0l3.5 2.813L7 0v1.084L3.5 4 0 1.084V0z"
+              d="M0 0l3.5 2.813L7 0v1.084L3.5 4 0 1.084V0z"
             >
             </path>
           </symbol>
@@ -29,7 +29,7 @@ export const PropertyPage: React.FC = () => {
           </symbol>
           <symbol id="icon-star" viewBox="0 0 13 12">
             <path fillRule="evenodd" clipRule="evenodd"
-                  d="M6.5 9.644L10.517 12 9.451 7.56 13 4.573l-4.674-.386L6.5 0 4.673 4.187 0 4.573 3.549 7.56 2.483 12 6.5 9.644z"
+              d="M6.5 9.644L10.517 12 9.451 7.56 13 4.573l-4.674-.386L6.5 0 4.673 4.187 0 4.573 3.549 7.56 2.483 12 6.5 9.644z"
             >
             </path>
           </symbol>
@@ -43,7 +43,7 @@ export const PropertyPage: React.FC = () => {
               <div className="header__left">
                 <a className="header__logo-link" href="main.html">
                   <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81"
-                       height="41"
+                    height="41"
                   />
                 </a>
               </div>
@@ -56,7 +56,7 @@ export const PropertyPage: React.FC = () => {
                       <span
                         className="header__user-name user__name"
                       >Oliver.conner@gmail.com
-                    </span>
+                      </span>
                       <span className="header__favorite-count">3</span>
                     </a>
                   </li>
@@ -175,15 +175,15 @@ export const PropertyPage: React.FC = () => {
                       className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper"
                     >
                       <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg"
-                           width="74" height="74" alt="Host avatar"
+                        width="74" height="74" alt="Host avatar"
                       />
                     </div>
                     <span className="property__user-name">
                                             Angelina
-                  </span>
+                    </span>
                     <span className="property__user-status">
                                             Pro
-                  </span>
+                    </span>
                   </div>
                   <div className="property__description">
                     <p className="property__text">
@@ -201,20 +201,20 @@ export const PropertyPage: React.FC = () => {
                   <h2 className="reviews__title">Reviews &middot;
                     <span className="reviews__amount">
                   1
-                  </span>
+                    </span>
                   </h2>
                   <ul className="reviews__list">
                     <li className="reviews__item">
                       <div className="reviews__user user">
                         <div className="reviews__avatar-wrapper user__avatar-wrapper">
                           <img className="reviews__avatar user__avatar"
-                               src="img/avatar-max.jpg" width="54" height="54"
-                               alt="Reviews avatar"
+                            src="img/avatar-max.jpg" width="54" height="54"
+                            alt="Reviews avatar"
                           />
                         </div>
                         <span className="reviews__user-name">
                         Max
-                      </span>
+                        </span>
                       </div>
                       <div className="reviews__info">
                         <div className="reviews__rating rating">
@@ -246,7 +246,7 @@ export const PropertyPage: React.FC = () => {
                   <div className="near-places__image-wrapper place-card__image-wrapper">
                     <a href="#">
                       <img className="place-card__image" src="img/room.jpg" width="260"
-                           height="200" alt="Place image"
+                        height="200" alt="Place image"
                       />
                     </a>
                   </div>
@@ -283,7 +283,7 @@ export const PropertyPage: React.FC = () => {
                   <div className="near-places__image-wrapper place-card__image-wrapper">
                     <a href="#">
                       <img className="place-card__image" src="img/apartment-02.jpg" width="260"
-                           height="200" alt="Place image"
+                        height="200" alt="Place image"
                       />
                     </a>
                   </div>
@@ -320,7 +320,7 @@ export const PropertyPage: React.FC = () => {
                   <div className="near-places__image-wrapper place-card__image-wrapper">
                     <a href="#">
                       <img className="place-card__image" src="img/apartment-03.jpg" width="260"
-                           height="200" alt="Place image"
+                        height="200" alt="Place image"
                       />
                     </a>
                   </div>

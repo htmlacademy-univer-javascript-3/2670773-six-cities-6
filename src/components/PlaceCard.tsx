@@ -20,7 +20,8 @@ export const PlaceCard: React.FC<PlaceCardProps> = ({offer}) => (
           src={offer.previewImage}
           width="260"
           height="200"
-          alt={offer.title}/>
+          alt={offer.title}
+        />
       </a>
     </div>
     <div className="place-card__info">

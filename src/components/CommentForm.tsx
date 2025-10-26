@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import type { ChangeEvent, FormEvent } from 'react';
+import React, {useState} from 'react';
+import type {ChangeEvent, FormEvent} from 'react';
 
 export const CommentForm: React.FC = () => {
   const [rating, setRating] = useState<number | null>(null);
@@ -11,12 +11,31 @@ export const CommentForm: React.FC = () => {
 
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
-  }
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // implement here the server sending logic
-  }
+  };
+
+  const convertRatingToMessage = (star: number) => {
+    if (star === 5) {
+      return 'perfect';
+    }
+
+    if (star === 4) {
+      return 'good';
+    }
+
+    if (star === 3) {
+      return 'not bad';
+    }
+
+    if (star === 2) {
+      return 'badly';
+    }
+
+    return 'terribly';
+  };
 
   return (
     <form className="reviews__form form" onSubmit={handleSubmit} action="#" method="post">
@@ -33,12 +52,11 @@ export const CommentForm: React.FC = () => {
               checked={rating === star}
               onChange={handleRatingChange}
             />
-            <label htmlFor={`${star}-stars`} className="reviews__rating-label form__rating-label" title={
-              star === 5 ? 'perfect' :
-                star === 4 ? 'good' :
-                  star === 3 ? 'not bad' :
-                    star === 2 ? 'badly' : 'terribly'
-            }>
+            <label
+              htmlFor={`${star}-stars`}
+              className="reviews__rating-label form__rating-label"
+              title={convertRatingToMessage(star)}
+            >
               <svg className="form__star-image" width="37" height="33">
                 <use xlinkHref="#icon-star"></use>
               </svg>
@@ -56,7 +74,8 @@ export const CommentForm: React.FC = () => {
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay
+          with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
 
         <button
@@ -69,4 +88,4 @@ export const CommentForm: React.FC = () => {
       </div>
     </form>
   );
-}
+};

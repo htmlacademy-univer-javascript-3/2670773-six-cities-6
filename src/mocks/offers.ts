@@ -155,4 +155,4 @@ export const offers: Offer[] = [
     description: 'A nice and cozy apartment with a big bed. Perfect for families and groups.',
     city: 'Amsterdam',
   },
-]
+];

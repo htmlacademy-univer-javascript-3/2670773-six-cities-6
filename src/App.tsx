@@ -6,7 +6,7 @@ import {FavoritesPage} from './pages/FavoritesPage';
 import {PropertyPage} from './pages/PropertyPage';
 import {NotFound} from './components/NotFound';
 import {ProtectedRoute} from './components/ProtectedRoute';
-import {Offer} from "./mocks/offers.ts";
+import {Offer} from './mocks/offers.ts';
 
 type AppProps = {
   offers: Offer[];
@@ -18,8 +18,9 @@ const App: React.FC<AppProps> = ({offers}) => (
       <Route path="/" element={<MainPage offers={offers}/>}/>
       <Route path="/login" element={<LoginPage/>}/>
       <Route element={
-        <ProtectedRoute isAuthorized={true} redirectPath={'/login'}/>
-      }>
+        <ProtectedRoute isAuthorized redirectPath={'/login'}/>
+      }
+      >
         <Route path="/favorites" element={<FavoritesPage offers={offers}/>}/>
       </Route>
       <Route path="/offer/:id" element={<PropertyPage/>}/>
