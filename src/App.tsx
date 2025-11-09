@@ -1,19 +1,21 @@
 import React, {useEffect} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {MainPage} from './pages/MainPage';
 import {LoginPage} from './pages/LoginPage';
 import {FavoritesPage} from './pages/FavoritesPage';
 import {PropertyPage} from './pages/PropertyPage';
 import {NotFound} from './components/NotFound';
 import {ProtectedRoute} from './components/ProtectedRoute';
-import { fetchOffers } from './store/offerThunks.ts';
-import type { AppDispatch } from './store';
+import {fetchOffers} from './store/offerThunks.ts';
+import type {AppDispatch} from './store';
+import {checkAuth} from "./store/authThunk.ts";
 
 const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
+    dispatch(checkAuth());
     dispatch(fetchOffers());
   }, [dispatch]);
 
