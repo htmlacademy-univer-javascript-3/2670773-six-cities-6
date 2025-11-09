@@ -1,13 +1,4 @@
-export type Review = {
-  id: string;
-  user: {
-    name: string;
-    avatarUrl: string;
-  };
-  rating: number;
-  comment: string;
-  date: string;
-};
+import {Review} from "../types/Review.ts";
 
 export const reviews: Review[] = [
   {

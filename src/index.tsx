@@ -3,10 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import {Provider} from "react-redux";
 import {store} from "./store";
-import {fillOffers} from "./store/action.ts";
-import {offers} from "./mocks/offers.ts";
 
-store.dispatch(fillOffers(offers));
+localStorage.setItem('six-cities-token', 'T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=');
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

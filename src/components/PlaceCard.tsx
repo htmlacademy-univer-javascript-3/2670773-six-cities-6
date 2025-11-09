@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import type {Offer} from '../mocks/offers';
+import {Offer} from "../types/Offer.ts";
 
 type PlaceCardProps = {
   offer: Offer;
