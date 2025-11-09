@@ -1,5 +1,5 @@
 import React, {useState, useMemo} from 'react';
-import {OffersList} from '../components/OffersList.tsx';
+import {OffersList} from '../components/OffersList';
 import {useSelector, useDispatch} from 'react-redux';
 import type {RootState} from '../store';
 import {Map} from '../components/Map';
@@ -7,19 +7,23 @@ import {CitiesList} from '../components/CitiesList';
 import {changeCity} from '../store/action';
 import {SortOptions} from '../components/SortOptions';
 import {SortType} from '../components/SortOptions';
+import {Header} from "../components/Header";
+import Spinner from '../components/Spinner';
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 export const MainPage: React.FC = () => {
   const dispatch = useDispatch();
   const city = useSelector((state: RootState) => state.city);
-  const offers = useSelector((state: RootState) => state.offers);
+  const offers = useSelector((state: RootState) => state.offers.items);
+  const isLoading = useSelector((state: RootState) => state.offers.isLoading);
+  const error = useSelector((state: RootState) => state.offers.error);
 
   const [sort, setSort] = useState<SortType>(SortType.Popular);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
   const filtered = useMemo(
-    () => offers.filter((offer) => offer.city === city),
+    () => offers.filter((offer) => offer.city.name === city),
     [offers, city]
   );
 
@@ -66,39 +70,7 @@ export const MainPage: React.FC = () => {
       </div>
 
       <div className="page page--gray page--main">
-        <header className="header">
-          <div className="container">
-            <div className="header__wrapper">
-              <div className="header__left">
-                <a className="header__logo-link header__logo-link--active">
-                  <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81"
-                       height="41"
-                  />
-                </a>
-              </div>
-              <nav className="header__nav">
-                <ul className="header__nav-list">
-                  <li className="header__nav-item user">
-                    <a className="header__nav-link header__nav-link--profile" href="#">
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
-                      </div>
-                      <span
-                        className="header__user-name user__name"
-                      >Oliver.conner@gmail.com
-                    </span>
-                      <span className="header__favorite-count">3</span>
-                    </a>
-                  </li>
-                  <li className="header__nav-item">
-                    <a className="header__nav-link" href="#">
-                      <span className="header__signout">Sign out</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </header>
+        <Header/>
 
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
@@ -117,7 +89,13 @@ export const MainPage: React.FC = () => {
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{filtered.length} places to stay in Amsterdam</b>
                 <SortOptions sortState={sort} onSortChange={setSort}/>
-                <OffersList offers={sorted} onCardHover={setActiveOfferId}/>
+                {
+                  isLoading
+                    ? <Spinner/>
+                    : error
+                      ? <div>{error}</div>
+                      : <OffersList offers={sorted} onCardHover={setActiveOfferId}/>
+                }
               </section>
               <div className="cities__right-section">
                 <Map offers={filtered} className="cities__map map" activeOfferId={activeOfferId}/>
