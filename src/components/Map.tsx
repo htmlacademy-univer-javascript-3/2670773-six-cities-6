@@ -1,16 +1,30 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import type { Offer } from '../mocks/offers';
+import type {Offer} from '../mocks/offers';
 
 type MapProps = {
   offers: Offer[];
   className?: string;
+  activeOfferId?: string | null;
 };
 
-export const Map: React.FC<MapProps> = ({ offers, className = '' }) => {
+const defaultIcon = leaflet.icon({
+  iconUrl: 'img/pin.svg',
+  iconSize: [27, 39],
+  iconAnchor: [13, 39]
+});
+
+const activeIcon = leaflet.icon({
+  iconUrl: '/img/pin-active.svg',
+  iconSize: [27, 39],
+  iconAnchor: [13, 39],
+});
+
+export const Map: React.FC<MapProps> = ({offers, className = '', activeOfferId}) => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const leafletMapRef = useRef<leaflet.Map | null>(null);
+  const markersRef = useRef<leaflet.LayerGroup | null>(null);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -27,27 +41,31 @@ export const Map: React.FC<MapProps> = ({ offers, className = '' }) => {
       }).addTo(leafletMapRef.current);
     }
 
-    leafletMapRef.current.eachLayer((layer) => {
-      if (layer instanceof leaflet.Marker) {
-        leafletMapRef.current?.removeLayer(layer);
-      }
-    });
+    if (markersRef.current) {
+      markersRef.current.clearLayers();
+    } else {
+      markersRef.current = leaflet.layerGroup().addTo(leafletMapRef.current);
+    }
 
     offers.forEach((offer) => {
-      leaflet.marker([offer.location.latitude, offer.location.longitude]).addTo(leafletMapRef.current!);
+      leaflet.marker(
+        [offer.location.latitude, offer.location.longitude],
+        {
+          icon: offer.id === activeOfferId ? activeIcon : defaultIcon,
+        }
+      ).addTo(markersRef.current!);
     });
 
     return () => {
-      leafletMapRef.current?.remove();
-      leafletMapRef.current = null;
+      markersRef.current?.clearLayers();
     };
-  }, [offers]);
+  }, [offers, activeOfferId]);
 
   return (
     <section
       ref={mapRef}
       className={`map ${className}`}
-      style={{ height: '100%', width: '100%' }}
+      style={{height: '100%', width: '100%'}}
       id="cities__leaflet-map-wrapper"
     />
   );

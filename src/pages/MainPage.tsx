@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState, useMemo} from 'react';
 import {OffersList} from '../components/OffersList.tsx';
-import { useSelector, useDispatch } from 'react-redux';
-import type { RootState } from '../store';
+import {useSelector, useDispatch} from 'react-redux';
+import type {RootState} from '../store';
 import {Map} from '../components/Map';
-import { CitiesList } from '../components/CitiesList';
-import { changeCity } from '../store/action';
+import {CitiesList} from '../components/CitiesList';
+import {changeCity} from '../store/action';
+import {SortOptions} from '../components/SortOptions';
+import {SortType} from '../components/SortOptions';
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
@@ -13,7 +15,26 @@ export const MainPage: React.FC = () => {
   const city = useSelector((state: RootState) => state.city);
   const offers = useSelector((state: RootState) => state.offers);
 
-  const filtered = offers.filter((offer) => offer.city === city);
+  const [sort, setSort] = useState<SortType>(SortType.Popular);
+  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
+
+  const filtered = useMemo(
+    () => offers.filter((offer) => offer.city === city),
+    [offers, city]
+  );
+
+  const sorted = useMemo(() => {
+    switch (sort) {
+      case 'Price: low to high':
+        return [...filtered].sort((a, b) => a.price - b.price);
+      case 'Price: high to low':
+        return [...filtered].sort((a, b) => b.price - a.price);
+      case 'Top rated first':
+        return [...filtered].sort((a, b) => b.rating - a.rating);
+      default:
+        return filtered;
+    }
+  }, [filtered, sort]);
 
   const handleCityClick = (selectedCity: string) => {
     dispatch(changeCity(selectedCity));
@@ -95,25 +116,11 @@ export const MainPage: React.FC = () => {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{filtered.length} places to stay in Amsterdam</b>
-                <form className="places__sorting" action="#" method="get">
-                  <span className="places__sorting-caption">Sort by</span>
-                  <span className="places__sorting-type" tabIndex={0}>
-                    Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                  <ul className="places__options places__options--custom places__options--opened">
-                    <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                    <li className="places__option" tabIndex={0}>Price: low to high</li>
-                    <li className="places__option" tabIndex={0}>Price: high to low</li>
-                    <li className="places__option" tabIndex={0}>Top rated first</li>
-                  </ul>
-                </form>
-                <OffersList offers={filtered}/>
+                <SortOptions sortState={sort} onSortChange={setSort}/>
+                <OffersList offers={sorted} onCardHover={setActiveOfferId}/>
               </section>
               <div className="cities__right-section">
-                <Map offers={filtered} className="cities__map map"/>
+                <Map offers={filtered} className="cities__map map" activeOfferId={activeOfferId}/>
               </div>
             </div>
           </div>
