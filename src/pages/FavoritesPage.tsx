@@ -1,13 +1,11 @@
 import React from 'react';
-import {Offer} from '../mocks/offers.ts';
-import {OffersList} from '../components/OffersList';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../store';
+import { FavoritesList } from '../components/FavoritesList';
 
-type MainPageProps = {
-  offers: Offer[];
-}
-
-export const FavoritesPage: React.FC<MainPageProps> = ({offers}) => {
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+export const FavoritesPage: React.FC = () => {
+  const offers = useSelector((state: RootState) => state.offers);
+  const favorites = offers.filter((offer) => offer.isFavorite);
 
   return (
     <>
@@ -73,7 +71,7 @@ export const FavoritesPage: React.FC<MainPageProps> = ({offers}) => {
           <div className="page__favorites-container container">
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
-              <OffersList offers={favoriteOffers}/>
+              <FavoritesList offers={favorites}/>
             </section>
           </div>
         </main>
