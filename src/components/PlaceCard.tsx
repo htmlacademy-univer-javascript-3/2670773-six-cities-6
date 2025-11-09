@@ -4,16 +4,36 @@ import type {Offer} from '../mocks/offers';
 
 type PlaceCardProps = {
   offer: Offer;
+  cardClassName?: string;
+  imageWrapperClassName?: string;
 };
 
-export const PlaceCard: React.FC<PlaceCardProps> = ({offer}) => (
-  <article className="cities__card place-card">
+export const PlaceCard: React.FC<PlaceCardProps> = (
+  {
+    offer,
+    cardClassName = 'cities__card',
+    imageWrapperClassName = 'cities__image-wrapper'
+  }
+) => (
+  <article
+    className={
+      `${cardClassName
+        ? cardClassName + ' '
+        : ''}place-card`
+    }
+  >
     {offer.isPremium && (
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
     )}
-    <div className="place-card__image-wrapper">
+    <div
+      className={
+        `${imageWrapperClassName
+          ? imageWrapperClassName + ' '
+          : ''} place-card__image-wrapper`
+      }
+    >
       <a href="#">
         <img
           className="place-card__image"
