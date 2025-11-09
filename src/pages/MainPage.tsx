@@ -1,6 +1,7 @@
 import React from 'react';
 import {Offer} from '../mocks/offers.ts';
 import {OffersList} from '../components/OffersList.tsx';
+import { Map } from '../components/Map';
 
 type MainPageProps = {
   offers: Offer[];
@@ -127,7 +128,7 @@ export const MainPage: React.FC<MainPageProps> = ({offers}) => (
               <OffersList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map offers={offers} className="cities__map map" />
             </div>
           </div>
         </div>
