@@ -2,10 +2,15 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import type {RootState} from '../store';
 import {FavoritesList} from '../components/FavoritesList';
+import {FavoritesEmptyPage} from "./FavoritesEmptyPage.tsx";
 
 export const FavoritesPage: React.FC = () => {
   const offers = useSelector((state: RootState) => state.offers.items);
   const favorites = offers.filter((offer) => offer.isFavorite);
+
+  if (favorites.length === 0) {
+    return <FavoritesEmptyPage/>
+  }
 
   return (
     <div className="page">

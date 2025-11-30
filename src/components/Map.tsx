@@ -6,6 +6,8 @@ import {Offer} from "../types/Offer.ts";
 type MapProps = {
   offers: Offer[];
   activeOfferId?: string | null;
+  center: [number, number];
+  cityChanged?: boolean;
 };
 
 const defaultIcon = leaflet.icon({
@@ -20,7 +22,7 @@ const activeIcon = leaflet.icon({
   iconAnchor: [13, 39],
 });
 
-export const Map: React.FC<MapProps> = ({offers, activeOfferId}) => {
+export const Map: React.FC<MapProps> = ({offers, activeOfferId, center, cityChanged}) => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const leafletMapRef = useRef<leaflet.Map | null>(null);
   const markersRef = useRef<leaflet.LayerGroup | null>(null);
@@ -30,7 +32,7 @@ export const Map: React.FC<MapProps> = ({offers, activeOfferId}) => {
 
     if (!leafletMapRef.current) {
       leafletMapRef.current = leaflet.map(mapRef.current, {
-        center: [52.37454, 4.897976],
+        center,
         zoom: 12,
         scrollWheelZoom: true,
       });
@@ -38,6 +40,8 @@ export const Map: React.FC<MapProps> = ({offers, activeOfferId}) => {
       leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(leafletMapRef.current);
+    } else if (cityChanged) {
+      leafletMapRef.current.setView(center, 12);
     }
 
     if (markersRef.current) {
@@ -58,7 +62,7 @@ export const Map: React.FC<MapProps> = ({offers, activeOfferId}) => {
     return () => {
       markersRef.current?.clearLayers();
     };
-  }, [offers, activeOfferId]);
+  }, [offers, activeOfferId, center, cityChanged]);
 
   return (
     <div

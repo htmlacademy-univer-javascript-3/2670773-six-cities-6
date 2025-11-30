@@ -3,3 +3,4 @@ import type { Offer } from '../types/Offer';
 
 export const changeCity = createAction<string>('city/changeCity');
 export const fillOffers = createAction<Offer[]>('offers/fillOffers');
+export const clearFavorites = createAction('favorites/clearfavorites');
