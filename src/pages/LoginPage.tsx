@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../store/authThunk';
 import type {AppDispatch, RootState} from '../store';
-import {Header} from '../components/Header';
-import {useNavigate} from 'react-router';
+import {Navigate, useNavigate} from 'react-router';
 import {AuthorizationStatus} from '../store/authSlice';
+import axios from "axios";
 
 export const LoginPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,19 +21,15 @@ export const LoginPage: React.FC = () => {
     try {
       await dispatch(login({email, password})).unwrap();
       navigate('/');
-    } catch (error: any) {
-      setError(error);
+    } catch (err: unknown) {
+      setError(axios.isAxiosError(err) ? err.message : 'Unknown error');
     }
   };
 
-  if (authorizationStatus === AuthorizationStatus.Authorized) {
-    navigate('/');
-    return null;
-  }
+  if (authorizationStatus === AuthorizationStatus.Authorized) return <Navigate to={'/'} replace/>;
 
   return (
     <div className="page page--gray page--login">
-      <Header/>
       <main className="page__main page__main--login">
         <div className="container">
           <section className="login">

@@ -1,13 +1,12 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router';
-import type {RootState} from '../store';
 import {AuthorizationStatus, setAuthorizationStatus} from '../store/authSlice';
+import {selectFavoriteCount, selectAuthorizationStatus} from '../store/selectors';
 
-export const Header: React.FC = () => {
-  const offers = useSelector((state: RootState) => state.offers.items);
-  const favoriteCount = offers.filter((offer) => offer.isFavorite).length;
-  const authorizationStatus = useSelector((state: RootState) => state.auth.authorizationStatus);
+export const Header: React.FC = React.memo(() => {
+  const favoriteCount = useSelector(selectFavoriteCount);
+  const authorizationStatus = useSelector(selectAuthorizationStatus);
   const dispatch = useDispatch();
 
   const handleSignOut = () => {
@@ -58,4 +57,4 @@ export const Header: React.FC = () => {
       </div>
     </header>
   );
-};
+});

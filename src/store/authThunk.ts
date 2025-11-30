@@ -1,6 +1,6 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { AxiosInstance } from 'axios';
-import { setAuthorizationStatus, AuthorizationStatus } from './authSlice';
+import {createAsyncThunk} from '@reduxjs/toolkit';
+import axios, {AxiosInstance} from 'axios';
+import {setAuthorizationStatus, AuthorizationStatus} from './authSlice';
 
 type LoginData = {
   email: string;
@@ -9,14 +9,14 @@ type LoginData = {
 
 export const login = createAsyncThunk<void, LoginData, { extra: AxiosInstance }>(
   'auth/login',
-  async (loginData, { extra: api, dispatch, rejectWithValue }) => {
+  async (loginData, {extra: api, dispatch, rejectWithValue}) => {
     try {
       const response = await api.post('/login', loginData);
-      const { token } = response.data;
+      const {token} = response.data;
       localStorage.setItem('six-cities-token', token);
       dispatch(setAuthorizationStatus(AuthorizationStatus.Authorized));
-    } catch (error: any) {
-      if (error.response?.status === 400) {
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response?.status === 400) {
         return rejectWithValue('Некорректные данные. Проверьте email и пароль.');
       }
       dispatch(setAuthorizationStatus(AuthorizationStatus.Unauthorized));
@@ -27,12 +27,12 @@ export const login = createAsyncThunk<void, LoginData, { extra: AxiosInstance }>
 
 export const checkAuth = createAsyncThunk<void, undefined, { extra: AxiosInstance }>(
   'auth/checkAuth',
-  async (_arg, { extra: api, dispatch }) => {
+  async (_arg, {extra: api, dispatch}) => {
     try {
       await api.get('/login');
       dispatch(setAuthorizationStatus(AuthorizationStatus.Authorized));
-    } catch (error: any) {
-      if (error.response?.status === 401) {
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
         dispatch(setAuthorizationStatus(AuthorizationStatus.Unauthorized));
       } else {
         dispatch(setAuthorizationStatus(AuthorizationStatus.Unknown));

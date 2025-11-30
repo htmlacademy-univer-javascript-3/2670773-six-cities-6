@@ -10,6 +10,7 @@ import {ProtectedRoute} from './components/ProtectedRoute';
 import {fetchOffers} from './store/offerThunks.ts';
 import type {AppDispatch} from './store';
 import {checkAuth} from "./store/authThunk.ts";
+import {Header} from "./components/Header.tsx";
 
 const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,6 +22,7 @@ const App: React.FC = () => {
 
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="/" element={<MainPage/>}/>
         <Route path="/login" element={<LoginPage/>}/>

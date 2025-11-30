@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import type {ChangeEvent, FormEvent} from 'react';
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../store";
@@ -8,7 +8,27 @@ type CommentFormProps = {
   offerId: string;
 };
 
-export const CommentForm: React.FC<CommentFormProps> = ({ offerId }) => {
+const convertRatingToMessage = (star: number) => {
+  if (star === 5) {
+    return 'perfect';
+  }
+
+  if (star === 4) {
+    return 'good';
+  }
+
+  if (star === 3) {
+    return 'not bad';
+  }
+
+  if (star === 2) {
+    return 'badly';
+  }
+
+  return 'terribly';
+};
+
+export const CommentForm: React.FC<CommentFormProps> = React.memo(({offerId}) => {
   const dispatch = useDispatch<AppDispatch>();
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
@@ -18,34 +38,14 @@ export const CommentForm: React.FC<CommentFormProps> = ({ offerId }) => {
     setComment(e.target.value);
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await dispatch(postComment({ offerId, comment, rating }));
+    await dispatch(postComment({offerId, comment, rating}));
     setComment('');
     setRating(0);
     setIsSubmitting(false);
-  }
-
-  const convertRatingToMessage = (star: number) => {
-    if (star === 5) {
-      return 'perfect';
-    }
-
-    if (star === 4) {
-      return 'good';
-    }
-
-    if (star === 3) {
-      return 'not bad';
-    }
-
-    if (star === 2) {
-      return 'badly';
-    }
-
-    return 'terribly';
-  };
+  }, [offerId, comment, rating]);
 
   return (
     <form className="reviews__form form" onSubmit={handleSubmit}>
@@ -101,4 +101,4 @@ export const CommentForm: React.FC<CommentFormProps> = ({ offerId }) => {
       </div>
     </form>
   );
-};
+});

@@ -19,7 +19,7 @@ const SORT_OPTIONS: SortType[] = [
   SortType.TopRatedFirst,
 ];
 
-export const SortOptions: React.FC<SortOptionsProps> = ({sortState, onSortChange}) => {
+export const SortOptions: React.FC<SortOptionsProps> = React.memo(({sortState, onSortChange}) => {
   const [opened, setOpened] = useState(false);
 
   return (
@@ -54,4 +54,4 @@ export const SortOptions: React.FC<SortOptionsProps> = ({sortState, onSortChange
       </ul>
     </form>
   );
-}
+});
