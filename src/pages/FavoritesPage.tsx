@@ -2,7 +2,6 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import type {RootState} from '../store';
 import {FavoritesList} from '../components/FavoritesList';
-import {Header} from "../components/Header.tsx";
 
 export const FavoritesPage: React.FC = () => {
   const offers = useSelector((state: RootState) => state.offers.items);
@@ -10,8 +9,6 @@ export const FavoritesPage: React.FC = () => {
 
   return (
     <div className="page">
-      <Header/>
-
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">

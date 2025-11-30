@@ -9,7 +9,7 @@ type PlaceCardProps = {
   onHover?: (id: string | null) => void;
 };
 
-export const PlaceCard: React.FC<PlaceCardProps> = (
+export const PlaceCard: React.FC<PlaceCardProps> = React.memo((
   {
     offer,
     cardClassName = 'cities__card',
@@ -38,7 +38,7 @@ export const PlaceCard: React.FC<PlaceCardProps> = (
           : ''} place-card__image-wrapper`
       }
     >
-      <a href="#">
+      <Link to={`/offer/${offer.id}`}>
         <img
           className="place-card__image"
           src={offer.previewImage}
@@ -46,7 +46,7 @@ export const PlaceCard: React.FC<PlaceCardProps> = (
           height="200"
           alt={offer.title}
         />
-      </a>
+      </Link>
     </div>
     <div className="place-card__info">
       <div className="place-card__price-wrapper">
@@ -61,7 +61,9 @@ export const PlaceCard: React.FC<PlaceCardProps> = (
           <svg className="place-card__bookmark-icon" width="18" height="19">
             <use xlinkHref="#icon-bookmark"></use>
           </svg>
-          <span className="visually-hidden">To bookmarks</span>
+          <span className="visually-hidden">
+            {offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}
+          </span>
         </button>
       </div>
       <div className="place-card__rating rating">
@@ -76,4 +78,4 @@ export const PlaceCard: React.FC<PlaceCardProps> = (
       <p className="place-card__type">{offer.type}</p>
     </div>
   </article>
-);
+));

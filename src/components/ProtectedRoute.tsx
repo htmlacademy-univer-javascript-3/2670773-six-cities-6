@@ -13,11 +13,11 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({redirectPath = '/
   const authorizedStatus = useSelector((state: RootState) => state.auth.authorizationStatus);
 
   if (authorizedStatus === AuthorizationStatus.Unknown) {
-    return <div><span>Подождите...</span><Spinner /></div>
+    return <div><span>Подождите...</span><Spinner/></div>
   }
 
   if (authorizedStatus !== AuthorizationStatus.Authorized) {
-    return <Navigate to={redirectPath}/>;
+    return <Navigate to={redirectPath} replace/>;
   }
 
   return <Outlet/>;

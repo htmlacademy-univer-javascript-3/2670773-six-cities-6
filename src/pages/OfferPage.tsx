@@ -1,15 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useParams, Navigate} from 'react-router';
 import {fetchOffer, fetchNearbyOffers, fetchReviews} from '../store/offerThunks';
 import type {RootState, AppDispatch} from '../store';
 import {AuthorizationStatus} from '../store/authSlice';
-import {Header} from '../components/Header';
 import {ReviewList} from '../components/ReviewList';
 import Spinner from '../components/Spinner';
 import {CommentForm} from '../components/CommentForm';
-import {Map} from '../components/Map';
-import {NearPlacesOffersList} from '../components/NearPlacesOffersList';
+import {NearPlacesOffersSection} from '../components/NearPlacesOffersSection';
 
 export const OfferPage: React.FC = () => {
   const {id} = useParams<{ id: string }>();
@@ -24,12 +22,10 @@ export const OfferPage: React.FC = () => {
   }, [id, dispatch]);
 
   const offer = useSelector((state: RootState) => state.offers.currentOffer);
-  const nearbyOffers = useSelector((state: RootState) => state.offers.nearbyOffers);
   const reviews = useSelector((state: RootState) => state.offers.reviews);
   const isOfferLoading = useSelector((state: RootState) => state.offers.isOfferLoading);
   const error = useSelector((state: RootState) => state.offers.error);
 
-  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
   const isAuthorized = useSelector((state: RootState) => state.auth.authorizationStatus === AuthorizationStatus.Authorized)
 
   if (isOfferLoading) {
@@ -40,7 +36,6 @@ export const OfferPage: React.FC = () => {
 
   return (
     <div className="page">
-      <Header/>
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
@@ -135,17 +130,7 @@ export const OfferPage: React.FC = () => {
           </div>
         </section>
         <h2 className="near-places__title">Other places in the neighbourhood</h2>
-        <div className="container" style={{display: 'flex', height: "860px"}}>
-          <section
-            className="near-places places"
-            style={{width: '680px', overflowY: 'auto', boxSizing: 'border-box', paddingTop: '10px'}}
-          >
-            <NearPlacesOffersList offers={nearbyOffers} onHover={setActiveOfferId}/>
-          </section>
-          <section className="offer__map map" style={{margin: "0 auto", width: "50%", height: '100%'}}>
-            <Map offers={nearbyOffers} activeOfferId={activeOfferId}/>
-          </section>
-        </div>
+        <NearPlacesOffersSection/>
       </main>
     </div>
   );

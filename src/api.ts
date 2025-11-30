@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { AxiosInstance } from 'axios';
+import type {AxiosInstance} from 'axios';
 
 const BASE_URL = 'https://14.design.htmlacademy.pro/six-cities';
 const TIMEOUT = 5000;
@@ -15,9 +15,8 @@ export const createAPI = (): AxiosInstance => {
     const token = localStorage.getItem(TOKEN_KEY);
     if (token) {
       config.headers['X-Token'] = token;
-    } else {
-      console.log('No token in localStorage');
     }
+
     return config;
   });
 

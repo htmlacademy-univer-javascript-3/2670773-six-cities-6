@@ -6,7 +6,7 @@ type CitiesListProps = {
   onCityClick: (city: string) => void;
 };
 
-export const CitiesList: React.FC<CitiesListProps> = ( { cities, activeCity, onCityClick }) => (
+export const CitiesList: React.FC<CitiesListProps> = React.memo(({ cities, activeCity, onCityClick }) => (
   <ul className="locations__list tabs__list">
     {cities.map((city) => (
       <li className="locations__item" key={city}>
@@ -23,4 +23,4 @@ export const CitiesList: React.FC<CitiesListProps> = ( { cities, activeCity, onC
       </li>
     ))}
   </ul>
-);
+));
