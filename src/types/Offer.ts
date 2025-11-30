@@ -6,17 +6,17 @@ export type Offer = {
   rating: number;
   isPremium: boolean;
   isFavorite: boolean;
-  previewImage: string;
-  images: string[];
-  bedrooms: number;
-  maxAdults: number;
-  goods: string[];
-  host: {
+  previewImage?: string;
+  images?: string[];
+  bedrooms?: number;
+  maxAdults?: number;
+  goods?: string[];
+  host?: {
     name: string;
     avatarUrl: string;
     isPro: boolean;
   };
-  description: string;
+  description?: string;
   city: {
     name: string;
     location: {
