@@ -1,13 +1,19 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router';
 import type {RootState} from '../store';
-import {AuthorizationStatus} from '../store/authSlice';
+import {AuthorizationStatus, setAuthorizationStatus} from '../store/authSlice';
 
 export const Header: React.FC = () => {
   const offers = useSelector((state: RootState) => state.offers.items);
   const favoriteCount = offers.filter((offer) => offer.isFavorite).length;
   const authorizationStatus = useSelector((state: RootState) => state.auth.authorizationStatus);
+  const dispatch = useDispatch();
+
+  const handleSignOut = () => {
+    localStorage.removeItem('six-cities-token');
+    dispatch(setAuthorizationStatus(AuthorizationStatus.Unauthorized));
+  }
 
   return (
     <header className="header">
@@ -38,9 +44,12 @@ export const Header: React.FC = () => {
               </li>
               {authorizationStatus === AuthorizationStatus.Authorized && (
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <button
+                    className="header__nav-link"
+                    style={{background: 'none', border: 'none', cursor: 'pointer'}}
+                    onClick={handleSignOut}>
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </button>
                 </li>
               )}
             </ul>

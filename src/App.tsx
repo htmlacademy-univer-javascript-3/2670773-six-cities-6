@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import {MainPage} from './pages/MainPage';
 import {LoginPage} from './pages/LoginPage';
 import {FavoritesPage} from './pages/FavoritesPage';
-import {PropertyPage} from './pages/PropertyPage';
+import {OfferPage} from './pages/OfferPage.tsx';
 import {NotFound} from './components/NotFound';
 import {ProtectedRoute} from './components/ProtectedRoute';
 import {fetchOffers} from './store/offerThunks.ts';
@@ -25,11 +25,11 @@ const App: React.FC = () => {
         <Route path="/" element={<MainPage/>}/>
         <Route path="/login" element={<LoginPage/>}/>
         <Route
-          element={<ProtectedRoute isAuthorized redirectPath={'/login'}/>}
+          element={<ProtectedRoute redirectPath={'/login'}/>}
         >
           <Route path="/favorites" element={<FavoritesPage/>}/>
         </Route>
-        <Route path="/offer/:id" element={<PropertyPage/>}/>
+        <Route path="/offer/:id" element={<OfferPage/>}/>
         <Route path="*" element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>

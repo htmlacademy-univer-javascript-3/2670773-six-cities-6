@@ -5,7 +5,6 @@ import {Offer} from "../types/Offer.ts";
 
 type MapProps = {
   offers: Offer[];
-  className?: string;
   activeOfferId?: string | null;
 };
 
@@ -21,7 +20,7 @@ const activeIcon = leaflet.icon({
   iconAnchor: [13, 39],
 });
 
-export const Map: React.FC<MapProps> = ({offers, className = '', activeOfferId}) => {
+export const Map: React.FC<MapProps> = ({offers, activeOfferId}) => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const leafletMapRef = useRef<leaflet.Map | null>(null);
   const markersRef = useRef<leaflet.LayerGroup | null>(null);
@@ -62,9 +61,8 @@ export const Map: React.FC<MapProps> = ({offers, className = '', activeOfferId})
   }, [offers, activeOfferId]);
 
   return (
-    <section
+    <div
       ref={mapRef}
-      className={`map ${className}`}
       style={{height: '100%', width: '100%'}}
       id="cities__leaflet-map-wrapper"
     />

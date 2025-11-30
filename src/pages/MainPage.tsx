@@ -16,7 +16,7 @@ export const MainPage: React.FC = () => {
   const dispatch = useDispatch();
   const city = useSelector((state: RootState) => state.city);
   const offers = useSelector((state: RootState) => state.offers.items);
-  const isLoading = useSelector((state: RootState) => state.offers.isLoading);
+  const isLoading = useSelector((state: RootState) => state.offers.isOffersLoading);
   const error = useSelector((state: RootState) => state.offers.error);
 
   const [sort, setSort] = useState<SortType>(SortType.Popular);
@@ -97,9 +97,9 @@ export const MainPage: React.FC = () => {
                       : <OffersList offers={sorted} onCardHover={setActiveOfferId}/>
                 }
               </section>
-              <div className="cities__right-section">
-                <Map offers={filtered} className="cities__map map" activeOfferId={activeOfferId}/>
-              </div>
+              <section className="cities__map map" style={{ width: '45%'}}>
+                <Map offers={filtered} activeOfferId={activeOfferId}/>
+              </section>
             </div>
           </div>
         </main>
