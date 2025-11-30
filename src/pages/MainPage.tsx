@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useCallback} from 'react';
+import React, {useState, useMemo, useCallback, useEffect} from 'react';
 import {OffersList} from '../components/OffersList';
 import {useSelector, useDispatch} from 'react-redux';
 import type {AppDispatch, RootState} from '../store';
@@ -8,12 +8,16 @@ import {changeCity} from '../store/action';
 import {SortOptions} from '../components/SortOptions';
 import {SortType} from '../components/SortOptions';
 import Spinner from '../components/Spinner';
+import {resetCityChanged} from "../store/citySlice.ts";
+import {MainEmptyPage} from "./MainEmptyPage.tsx";
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 export const MainPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const city = useSelector((state: RootState) => state.city);
+  const cityCoords = useSelector((state: RootState) => state.city.coords);
+  const cityChanged = useSelector((state: RootState) => state.city.cityChanged);
   const offers = useSelector((state: RootState) => state.offers.items);
   const isLoading = useSelector((state: RootState) => state.offers.isOffersLoading);
   const error = useSelector((state: RootState) => state.offers.error);
@@ -22,7 +26,7 @@ export const MainPage: React.FC = () => {
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
   const filtered = useMemo(
-    () => offers.filter((offer) => offer.city.name === city),
+    () => offers.filter((offer) => offer.city.name === city.name),
     [offers, city]
   );
 
@@ -43,6 +47,16 @@ export const MainPage: React.FC = () => {
     dispatch(changeCity(selectedCity));
   }, [dispatch]);
 
+  useEffect(() => {
+    if (cityChanged) {
+      dispatch(resetCityChanged());
+    }
+  }, [cityChanged, dispatch])
+
+  if ((!isLoading && filtered.length === 0) || error) {
+    return <MainEmptyPage/>;
+  }
+
   return (
     <div className="page page--gray page--main">
       <main className="page__main page__main--index">
@@ -51,7 +65,7 @@ export const MainPage: React.FC = () => {
           <section className="locations container">
             <CitiesList
               cities={CITIES}
-              activeCity={city}
+              activeCity={city.name}
               onCityClick={handleCityClick}
             />
           </section>
@@ -60,7 +74,7 @@ export const MainPage: React.FC = () => {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{filtered.length} places to stay in Amsterdam</b>
+              <b className="places__found">{filtered.length} places to stay in {city.name}</b>
               <SortOptions sortState={sort} onSortChange={setSort}/>
               {
                 isLoading
@@ -71,7 +85,7 @@ export const MainPage: React.FC = () => {
               }
             </section>
             <section className="cities__map map" style={{width: '45%'}}>
-              <Map offers={filtered} activeOfferId={activeOfferId}/>
+              <Map offers={filtered} activeOfferId={activeOfferId} center={cityCoords} cityChanged={cityChanged}/>
             </section>
           </div>
         </div>

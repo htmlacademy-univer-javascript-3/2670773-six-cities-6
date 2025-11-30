@@ -1,7 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {fetchNearbyOffers, fetchOffer, fetchOffers, fetchReviews} from './offerThunks';
+import {
+  changeFavoriteStatus,
+  fetchFavorites,
+  fetchNearbyOffers,
+  fetchOffer,
+  fetchOffers,
+  fetchReviews
+} from './offerThunks';
 import type {Offer} from '../types/Offer';
 import {Review} from "../types/Review.ts";
+import {clearFavorites} from "./action.ts";
 
 type OffersState = {
   items: Offer[];
@@ -60,6 +68,38 @@ export const offersSlice = createSlice({
       })
       .addCase(fetchReviews.fulfilled, (state, action) => {
         state.reviews = action.payload;
+      })
+      .addCase(fetchFavorites.fulfilled, (state, action) => {
+        const favoriteIds = new Set(action.payload.map((offer) => offer.id));
+        state.items = state.items.map((offer) => ({
+          ...offer,
+          isFavorite: favoriteIds.has(offer.id)
+        }));
+      })
+      .addCase(changeFavoriteStatus.fulfilled, (state, action) => {
+        const updatedOffer = action.payload;
+        state.items = state.items.map((offer) =>
+          offer.id === updatedOffer.id ? updatedOffer : offer
+        );
+        if (state.currentOffer?.id === updatedOffer.id) {
+          state.currentOffer = updatedOffer;
+        }
+        state.nearbyOffers = state.nearbyOffers.map((offer) =>
+          offer.id === updatedOffer.id ? updatedOffer : offer
+        );
+      })
+      .addCase(clearFavorites, (state) => {
+        state.items = state.items.map((offer) => ({
+          ...offer,
+          isFavorite: false
+        }));
+        if (state.currentOffer) {
+          state.currentOffer = {...state.currentOffer, isFavorite: false};
+        }
+        state.nearbyOffers = state.nearbyOffers.map((offer) => ({
+          ...offer,
+          isFavorite: false
+        }));
       });
   },
 });

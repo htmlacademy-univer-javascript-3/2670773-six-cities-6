@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {useParams, Navigate} from 'react-router';
-import {fetchOffer, fetchNearbyOffers, fetchReviews} from '../store/offerThunks';
+import {useParams, Navigate, useNavigate} from 'react-router';
+import {fetchOffer, fetchNearbyOffers, fetchReviews, changeFavoriteStatus} from '../store/offerThunks';
 import type {RootState, AppDispatch} from '../store';
 import {AuthorizationStatus} from '../store/authSlice';
 import {ReviewList} from '../components/ReviewList';
@@ -12,6 +12,7 @@ import {NearPlacesOffersSection} from '../components/NearPlacesOffersSection';
 export const OfferPage: React.FC = () => {
   const {id} = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -27,6 +28,21 @@ export const OfferPage: React.FC = () => {
   const error = useSelector((state: RootState) => state.offers.error);
 
   const isAuthorized = useSelector((state: RootState) => state.auth.authorizationStatus === AuthorizationStatus.Authorized)
+
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!isAuthorized) {
+      navigate('/login');
+      return;
+    }
+    if (!offer?.id) {
+      return;
+    }
+    dispatch(changeFavoriteStatus({
+      offerId: offer.id,
+      status: offer.isFavorite ? 0 : 1
+    }));
+  }
 
   if (isOfferLoading) {
     return <Spinner/>;
@@ -61,6 +77,7 @@ export const OfferPage: React.FC = () => {
                 <button
                   className={`offer__bookmark-button button${offer?.isFavorite ? ' offer__bookmark-button--active' : ''}`}
                   type="button"
+                  onClick={handleFavoriteClick}
                 >
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>

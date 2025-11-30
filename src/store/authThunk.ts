@@ -1,6 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios, {AxiosInstance} from 'axios';
 import {setAuthorizationStatus, AuthorizationStatus} from './authSlice';
+import {fetchFavorites} from "./offerThunks.ts";
+import {clearFavorites} from "./action.ts";
 
 type LoginData = {
   email: string;
@@ -15,6 +17,7 @@ export const login = createAsyncThunk<void, LoginData, { extra: AxiosInstance }>
       const {token} = response.data;
       localStorage.setItem('six-cities-token', token);
       dispatch(setAuthorizationStatus(AuthorizationStatus.Authorized));
+      dispatch(fetchFavorites());
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response?.status === 400) {
         return rejectWithValue('Некорректные данные. Проверьте email и пароль.');
@@ -31,6 +34,7 @@ export const checkAuth = createAsyncThunk<void, undefined, { extra: AxiosInstanc
     try {
       await api.get('/login');
       dispatch(setAuthorizationStatus(AuthorizationStatus.Authorized));
+      dispatch(fetchFavorites());
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
         dispatch(setAuthorizationStatus(AuthorizationStatus.Unauthorized));
@@ -38,5 +42,15 @@ export const checkAuth = createAsyncThunk<void, undefined, { extra: AxiosInstanc
         dispatch(setAuthorizationStatus(AuthorizationStatus.Unknown));
       }
     }
+  }
+);
+
+export const logout = createAsyncThunk<void, undefined, { extra: AxiosInstance }>(
+  'auth/logout',
+  async (_arg, { extra: api, dispatch }) => {
+    await api.delete('/logout');
+    localStorage.removeItem('six-cities-token');
+    dispatch(setAuthorizationStatus(AuthorizationStatus.Unauthorized));
+    dispatch(clearFavorites());
   }
 );
