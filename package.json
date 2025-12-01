@@ -7,7 +7,7 @@
 		"build": "tsc && vite build",
 		"lint": "eslint src --fix",
 		"preview": "vite preview",
-		"test": "vitest --passWithNoTests"
+		"test": "vitest"
 	},
 	"dependencies": {
 		"@reduxjs/toolkit": "1.9.7",

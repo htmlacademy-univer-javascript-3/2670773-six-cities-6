@@ -11,7 +11,7 @@ import type {Offer} from '../types/Offer';
 import {Review} from "../types/Review.ts";
 import {clearFavorites} from "./action.ts";
 
-type OffersState = {
+export type OffersState = {
   items: Offer[];
   currentOffer: Offer | null;
   nearbyOffers: Offer[];
