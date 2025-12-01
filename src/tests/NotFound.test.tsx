@@ -9,6 +9,5 @@ describe('NotFound', () => {
     expect(screen.getByText(/404 not found/i)).toBeInTheDocument();
     const link = screen.getByRole('link', {name: /go to main page/i});
     expect(link).toHaveAttribute('href', '/');
-    ;
   });
 });
