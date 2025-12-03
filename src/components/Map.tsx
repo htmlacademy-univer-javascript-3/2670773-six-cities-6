@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {Offer} from "../types/Offer.ts";
+import {Offer} from '../types/Offer.ts';
 
 type MapProps = {
   offers: Offer[];
@@ -28,7 +28,9 @@ export const Map: React.FC<MapProps> = ({offers, activeOfferId, center, cityChan
   const markersRef = useRef<leaflet.LayerGroup | null>(null);
 
   useEffect(() => {
-    if (!mapRef.current) return;
+    if (!mapRef.current) {
+      return;
+    }
 
     if (!leafletMapRef.current) {
       leafletMapRef.current = leaflet.map(mapRef.current, {

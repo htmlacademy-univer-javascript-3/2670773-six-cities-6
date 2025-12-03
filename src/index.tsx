@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
-import {Provider} from "react-redux";
-import {store} from "./store";
+import {Provider} from 'react-redux';
+import {store} from './store';
 
 localStorage.setItem('six-cities-token', 'T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=');
 

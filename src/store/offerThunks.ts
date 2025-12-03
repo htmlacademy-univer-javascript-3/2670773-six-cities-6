@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import type {AxiosInstance} from 'axios';
 import type {Offer} from '../types/Offer';
-import {Review} from "../types/Review.ts";
+import {Review} from '../types/Review.ts';
 
 type Comment = {
   offerId: string;
@@ -25,7 +25,7 @@ export const fetchOffer = createAsyncThunk<Offer, string, { extra: AxiosInstance
   'offers/fetchOffer',
   async (id, {extra: api, rejectWithValue}) => {
     try {
-      const {data} = await api.get<Offer>(`/offers/${id}`)
+      const {data} = await api.get<Offer>(`/offers/${id}`);
       return data;
     } catch (err) {
       return rejectWithValue(`Failed to fetch offer: ${err}`);
@@ -75,10 +75,10 @@ export const fetchFavorites = createAsyncThunk<Offer[], void, { extra: AxiosInst
     const response = await api.get('/favorite');
     return response.data;
   }
-)
+);
 
 export const changeFavoriteStatus = createAsyncThunk<Offer, { offerId: string; status: 0 | 1 }, {
-  extra: AxiosInstance
+  extra: AxiosInstance;
 }>(
   'offers/changeFavoriteStatus',
   async ({offerId, status}, {extra: api, rejectWithValue}) => {

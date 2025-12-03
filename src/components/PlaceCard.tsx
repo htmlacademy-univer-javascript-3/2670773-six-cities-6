@@ -1,10 +1,10 @@
 import React from 'react';
 import {Link, useNavigate} from 'react-router';
-import {Offer} from "../types/Offer.ts";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../store";
-import {AuthorizationStatus} from "../store/authSlice.ts";
-import {changeFavoriteStatus} from "../store/offerThunks.ts";
+import {Offer} from '../types/Offer.ts';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '../store';
+import {AuthorizationStatus} from '../store/authSlice.ts';
+import {changeFavoriteStatus} from '../store/offerThunks.ts';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -37,13 +37,13 @@ export const PlaceCard: React.FC<PlaceCardProps> = React.memo((
       offerId: offer.id,
       status: offer.isFavorite ? 0 : 1
     }));
-  }
+  };
 
   return (
     <article
       className={
         `${cardClassName
-          ? cardClassName + ' '
+          ? `${cardClassName } `
           : ''}place-card`
       }
       onMouseEnter={() => onHover?.(offer.id)}
@@ -57,7 +57,7 @@ export const PlaceCard: React.FC<PlaceCardProps> = React.memo((
       <div
         className={
           `${imageWrapperClassName
-            ? imageWrapperClassName + ' '
+            ? `${imageWrapperClassName } `
             : ''} place-card__image-wrapper`
         }
       >
@@ -86,8 +86,8 @@ export const PlaceCard: React.FC<PlaceCardProps> = React.memo((
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
             <span className="visually-hidden">
-            {offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}
-          </span>
+              {offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}
+            </span>
           </button>
         </div>
         <div className="place-card__rating rating">

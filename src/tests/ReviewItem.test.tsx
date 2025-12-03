@@ -1,5 +1,5 @@
-import '@testing-library/jest-dom/vitest'
-import { describe, expect, it } from "vitest"
+import '@testing-library/jest-dom/vitest';
+import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import type { Review } from '../types/Review';
 import { ReviewItem } from '../components/ReviewItem';
@@ -19,5 +19,5 @@ describe('ReviewItem', () => {
     expect(screen.getByText('Alice')).toBeInTheDocument();
     expect(screen.getByText('Great place!')).toBeInTheDocument();
     expect(screen.getByText(/October 2025/i)).toBeInTheDocument();
-  })
-})
+  });
+});

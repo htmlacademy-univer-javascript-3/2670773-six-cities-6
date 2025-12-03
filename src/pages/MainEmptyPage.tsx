@@ -1,6 +1,6 @@
 import React from 'react';
-import {useSelector} from "react-redux";
-import {RootState} from "../store";
+import {useSelector} from 'react-redux';
+import {RootState} from '../store';
 
 export const MainEmptyPage: React.FC = () => {
   const city = useSelector((state: RootState) => state.city);

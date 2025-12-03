@@ -4,7 +4,7 @@ import {login} from '../store/authThunk';
 import type {AppDispatch, RootState} from '../store';
 import {Navigate, useNavigate} from 'react-router';
 import {AuthorizationStatus} from '../store/authSlice';
-import axios from "axios";
+import axios from 'axios';
 
 export const LoginPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,7 +26,9 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  if (authorizationStatus === AuthorizationStatus.Authorized) return <Navigate to={'/'} replace/>;
+  if (authorizationStatus === AuthorizationStatus.Authorized) {
+    return <Navigate to={'/'} replace/>;
+  }
 
   return (
     <div className="page page--gray page--login">
@@ -34,7 +36,12 @@ export const LoginPage: React.FC = () => {
         <div className="container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" onSubmit={handleSubmit}>
+            <form
+              className="login__form form"
+              onSubmit={(event) => {
+                handleSubmit(event);
+              }}
+            >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
@@ -42,7 +49,7 @@ export const LoginPage: React.FC = () => {
                   type="email"
                   name="email"
                   value={email}
-                  onChange={e => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
@@ -53,7 +60,7 @@ export const LoginPage: React.FC = () => {
                   type="password"
                   name="password"
                   value={password}
-                  onChange={e => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
@@ -64,5 +71,5 @@ export const LoginPage: React.FC = () => {
         </div>
       </main>
     </div>
-  )
+  );
 };

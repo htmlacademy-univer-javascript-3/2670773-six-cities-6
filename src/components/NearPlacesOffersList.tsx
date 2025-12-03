@@ -1,6 +1,6 @@
 import React from 'react';
 import {PlaceCard} from './PlaceCard';
-import {Offer} from "../types/Offer.ts";
+import {Offer} from '../types/Offer.ts';
 
 type NearPlacesOffersListProps = {
   offers: Offer[];

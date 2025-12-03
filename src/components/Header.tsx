@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router';
 import {AuthorizationStatus} from '../store/authSlice';
 import {selectAuthorizationStatus} from '../store/selectors';
-import {AppDispatch, RootState} from "../store";
-import {logout} from "../store/authThunk.ts";
+import {AppDispatch, RootState} from '../store';
+import {logout} from '../store/authThunk.ts';
 
 export const Header: React.FC = React.memo(() => {
   const favoriteCount = useSelector((state: RootState) => state.offers.items.filter((offer) => offer.isFavorite).length);
@@ -47,7 +47,8 @@ export const Header: React.FC = React.memo(() => {
                   <button
                     className="header__nav-link"
                     style={{background: 'none', border: 'none', cursor: 'pointer'}}
-                    onClick={handleSignOut}>
+                    onClick={handleSignOut}
+                  >
                     <span className="header__signout">Sign out</span>
                   </button>
                 </li>
