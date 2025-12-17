@@ -1,8 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios, {AxiosInstance} from 'axios';
 import {setAuthorizationStatus, AuthorizationStatus} from './authSlice';
-import {fetchFavorites} from "./offerThunks.ts";
-import {clearFavorites} from "./action.ts";
+import {fetchFavorites} from './offerThunks.ts';
+import {clearFavorites} from './action.ts';
 
 type LoginData = {
   email: string;

@@ -119,8 +119,8 @@ describe('offerSlice reducer', () => {
     const favoritesPayload = [makeOffer('2', true)];
     const next = offersReducer(prev, fetchFavorites.fulfilled(favoritesPayload, '', undefined));
 
-    expect(next.items.find(o => o.id === '1')?.isFavorite).toBe(false);
-    expect(next.items.find(o => o.id === '2')?.isFavorite).toBe(true);
+    expect(next.items.find((o) => o.id === '1')?.isFavorite).toBe(false);
+    expect(next.items.find((o) => o.id === '2')?.isFavorite).toBe(true);
   });
 
   // changeFavoriteStatus
@@ -142,16 +142,16 @@ describe('offerSlice reducer', () => {
     );
 
     // items: updated offer replaced
-    expect(next.items.find(o => o.id === '10')?.isFavorite).toBe(true);
-    expect(next.items.find(o => o.id === '20')?.isFavorite).toBe(false);
+    expect(next.items.find((o) => o.id === '10')?.isFavorite).toBe(true);
+    expect(next.items.find((o) => o.id === '20')?.isFavorite).toBe(false);
 
     // currentOffer updated if ids match
     expect(next.currentOffer?.id).toBe('10');
     expect(next.currentOffer?.isFavorite).toBe(true);
 
     // nearbyOffers updated by id
-    expect(next.nearbyOffers.find(o => o.id === '10')?.isFavorite).toBe(true);
-    expect(next.nearbyOffers.find(o => o.id === '20')?.isFavorite).toBe(false);
+    expect(next.nearbyOffers.find((o) => o.id === '10')?.isFavorite).toBe(true);
+    expect(next.nearbyOffers.find((o) => o.id === '20')?.isFavorite).toBe(false);
   });
 
   // clearFavorites
@@ -167,8 +167,8 @@ describe('offerSlice reducer', () => {
 
     const next = offersReducer(prev, clearFavorites());
 
-    expect(next.items.every(o => o.isFavorite === false)).toBe(true);
+    expect(next.items.every((o) => o.isFavorite === false)).toBe(true);
     expect(next.currentOffer?.isFavorite).toBe(false);
-    expect(next.nearbyOffers.every(o => o.isFavorite === false)).toBe(true);
-  })
+    expect(next.nearbyOffers.every((o) => o.isFavorite === false)).toBe(true);
+  });
 });

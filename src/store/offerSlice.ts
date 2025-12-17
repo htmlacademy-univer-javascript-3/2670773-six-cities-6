@@ -8,8 +8,8 @@ import {
   fetchReviews
 } from './offerThunks';
 import type {Offer} from '../types/Offer';
-import {Review} from "../types/Review.ts";
-import {clearFavorites} from "./action.ts";
+import {Review} from '../types/Review.ts';
+import {clearFavorites} from './action.ts';
 
 export type OffersState = {
   items: Offer[];
@@ -29,7 +29,7 @@ const initialState: OffersState = {
   isOffersLoading: false,
   isOfferLoading: false,
   error: null,
-}
+};
 
 export const offersSlice = createSlice({
   name: 'offers',
@@ -47,7 +47,7 @@ export const offersSlice = createSlice({
       })
       .addCase(fetchOffers.rejected, (state, action) => {
         state.isOffersLoading = false;
-        state.error = action.payload as string
+        state.error = action.payload as string;
       })
       .addCase(fetchOffer.pending, (state) => {
         state.isOfferLoading = true;

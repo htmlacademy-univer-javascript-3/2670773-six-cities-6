@@ -1,7 +1,7 @@
-import '@testing-library/jest-dom/vitest'
-import {describe, expect, it, vi} from "vitest"
+import '@testing-library/jest-dom/vitest';
+import {describe, expect, it, vi} from 'vitest';
 import {render, screen} from '@testing-library/react';
-import {FavoritesList} from "../components/FavoritesList";
+import {FavoritesList} from '../components/FavoritesList';
 import type {Offer} from '../types/Offer';
 import {NearPlacesOffersList} from '../components/NearPlacesOffersList';
 

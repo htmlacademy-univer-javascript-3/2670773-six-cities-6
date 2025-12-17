@@ -1,5 +1,5 @@
-import '@testing-library/jest-dom/vitest'
-import {describe, expect, it} from "vitest"
+import '@testing-library/jest-dom/vitest';
+import {describe, expect, it} from 'vitest';
 import {render, screen, within} from '@testing-library/react';
 import type {Review} from '../types/Review';
 import {ReviewList} from '../components/ReviewList';
@@ -33,4 +33,4 @@ describe('ReviewList', () => {
     const items = screen.getAllByRole('listitem');
     expect(items.length).toBe(2);
   });
-})
+});

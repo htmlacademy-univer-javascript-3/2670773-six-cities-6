@@ -1,8 +1,8 @@
 import React, {useCallback, useState} from 'react';
 import type {ChangeEvent, FormEvent} from 'react';
-import {useDispatch} from "react-redux";
-import {AppDispatch} from "../store";
-import {postComment} from "../store/offerThunks.ts";
+import {useDispatch} from 'react-redux';
+import {AppDispatch} from '../store';
+import {postComment} from '../store/offerThunks.ts';
 
 type CommentFormProps = {
   offerId: string;
@@ -38,14 +38,16 @@ export const CommentForm: React.FC<CommentFormProps> = React.memo(({offerId}) =>
     setComment(e.target.value);
   };
 
-  const handleSubmit = useCallback(async (e: FormEvent) => {
+  const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await dispatch(postComment({offerId, comment, rating}));
-    setComment('');
-    setRating(0);
-    setIsSubmitting(false);
-  }, [offerId, comment, rating]);
+    dispatch(postComment({offerId, comment, rating}))
+      .then(() => {
+        setComment('');
+        setRating(0);
+        setIsSubmitting(false);
+      });
+  }, [offerId, comment, rating, dispatch]);
 
   return (
     <form className="reviews__form form" onSubmit={handleSubmit}>

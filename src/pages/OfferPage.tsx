@@ -27,7 +27,7 @@ export const OfferPage: React.FC = () => {
   const isOfferLoading = useSelector((state: RootState) => state.offers.isOfferLoading);
   const error = useSelector((state: RootState) => state.offers.error);
 
-  const isAuthorized = useSelector((state: RootState) => state.auth.authorizationStatus === AuthorizationStatus.Authorized)
+  const isAuthorized = useSelector((state: RootState) => state.auth.authorizationStatus === AuthorizationStatus.Authorized);
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -42,13 +42,15 @@ export const OfferPage: React.FC = () => {
       offerId: offer.id,
       status: offer.isFavorite ? 0 : 1
     }));
-  }
+  };
 
   if (isOfferLoading) {
     return <Spinner/>;
   }
 
-  if (!isOfferLoading && error) return <Navigate to="/404" replace/>;
+  if (!isOfferLoading && error) {
+    return <Navigate to="/404" replace/>;
+  }
 
   return (
     <div className="page">
@@ -56,8 +58,8 @@ export const OfferPage: React.FC = () => {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {offer?.images?.map((img, i) => (
-                <div className="offer__image-wrapper" key={i}>
+              {offer?.images?.map((img) => (
+                <div className="offer__image-wrapper" key={img}>
                   <img className="offer__image" src={img} alt={offer?.title}/>
                 </div>
               ))}
@@ -110,8 +112,8 @@ export const OfferPage: React.FC = () => {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {offer?.goods?.map((good, i) => (
-                    <li className="offer__inside-item" key={i}>
+                  {offer?.goods?.map((good) => (
+                    <li className="offer__inside-item" key={good}>
                       {good}
                     </li>
                   ))}
@@ -125,7 +127,8 @@ export const OfferPage: React.FC = () => {
                       className={`offer__avatar-wrapper ${offer.host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}
                     >
                       <img className="offer__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74"
-                           alt="Host avatar"/>
+                        alt="Host avatar"
+                      />
                     </div>
                     <span className="offer__user-name">{offer.host.name}</span>
                     {offer.host.isPro && <span className="offer__user-status">Pro</span>}
@@ -151,4 +154,4 @@ export const OfferPage: React.FC = () => {
       </main>
     </div>
   );
-}
+};

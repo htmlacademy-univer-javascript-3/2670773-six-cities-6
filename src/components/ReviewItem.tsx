@@ -1,5 +1,5 @@
 import React from 'react';
-import {Review} from "../types/Review.ts";
+import {Review} from '../types/Review.ts';
 
 type ReviewItemProps = {
   review: Review;

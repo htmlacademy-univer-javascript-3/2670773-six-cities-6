@@ -8,8 +8,8 @@ import {changeCity} from '../store/action';
 import {SortOptions} from '../components/SortOptions';
 import {SortType} from '../components/SortOptions';
 import Spinner from '../components/Spinner';
-import {resetCityChanged} from "../store/citySlice.ts";
-import {MainEmptyPage} from "./MainEmptyPage.tsx";
+import {resetCityChanged} from '../store/citySlice.ts';
+import {MainEmptyPage} from './MainEmptyPage.tsx';
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
@@ -51,7 +51,7 @@ export const MainPage: React.FC = () => {
     if (cityChanged) {
       dispatch(resetCityChanged());
     }
-  }, [cityChanged, dispatch])
+  }, [cityChanged, dispatch]);
 
   if ((!isLoading && filtered.length === 0) || error) {
     return <MainEmptyPage/>;
@@ -76,13 +76,9 @@ export const MainPage: React.FC = () => {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filtered.length} places to stay in {city.name}</b>
               <SortOptions sortState={sort} onSortChange={setSort}/>
-              {
-                isLoading
-                  ? <Spinner/>
-                  : error
-                    ? <div>{error}</div>
-                    : <OffersList offers={sorted} onCardHover={setActiveOfferId}/>
-              }
+              {isLoading && <Spinner/>}
+              {!isLoading && error && <div>{error}</div>}
+              {!isLoading && !error && <OffersList offers={sorted} onCardHover={setActiveOfferId}/>}
             </section>
             <section className="cities__map map" style={{width: '45%'}}>
               <Map offers={filtered} activeOfferId={activeOfferId} center={cityCoords} cityChanged={cityChanged}/>

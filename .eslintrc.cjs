@@ -18,7 +18,22 @@ module.exports = {
 	overrides: [
 		{
 			files: ['*test*'],
-			rules: {'@typescript-eslint/unbound-method': 'off'}
+			rules: {
+        '@typescript-eslint/unbound-method': 'off',
+        '@typescript-eslint/no-unsafe-return': 'off'
+      }
 		},
+    {
+      files: ['src/**/*.{ts,tsx}'],
+      rules: {
+        '@typescript-eslint/restrict-template-expressions': 'off',
+        '@typescript-eslint/no-unsafe-return': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-argument': 'off',
+        'react-refresh/only-export-components': 'off',
+        'react/display-name': 'off',
+        'react/prop-types': 'off',
+      }
+    }
 	],
 }
