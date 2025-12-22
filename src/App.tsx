@@ -1,16 +1,16 @@
 import React, {useEffect} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router';
 import {useDispatch} from 'react-redux';
-import {MainPage} from './pages/MainPage';
-import {LoginPage} from './pages/LoginPage';
-import {FavoritesPage} from './pages/FavoritesPage';
-import {OfferPage} from './pages/OfferPage.tsx';
-import {NotFound} from './components/NotFound';
-import {ProtectedRoute} from './components/ProtectedRoute';
-import {fetchOffers} from './store/offerThunks.ts';
+import {MainPage} from './pages/main-page.tsx';
+import {LoginPage} from './pages/login-page.tsx';
+import {FavoritesPage} from './pages/favorites-page.tsx';
+import {OfferPage} from './pages/offer-page.tsx';
+import NotFound from './components/NotFound';
+import ProtectedRoute from './components/ProtectedRoute';
+import {fetchOffers} from './store/offer-thunks.ts';
 import type {AppDispatch} from './store';
-import {checkAuth} from './store/authThunk.ts';
-import {Header} from './components/Header.tsx';
+import {checkAuth} from './store/auth-thunk.ts';
+import Header from './components/Header';
 
 const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

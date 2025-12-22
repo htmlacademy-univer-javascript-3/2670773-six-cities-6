@@ -1,7 +1,7 @@
 import {combineReducers} from '@reduxjs/toolkit';
-import offersReducer from './offerSlice';
-import cityReducer from './citySlice';
-import authReducer from './authSlice';
+import offersReducer from './offer-slice.ts';
+import cityReducer from './city-slice.ts';
+import authReducer from './auth-slice.ts';
 
 export const reducer = combineReducers({
   offers: offersReducer,
